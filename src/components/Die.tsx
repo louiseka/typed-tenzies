@@ -1,12 +1,19 @@
-export default function Die(props) {
+import type { JSX } from "react"
+
+type DieProps = {
+    value: number,
+    isHeld: boolean,
+    holdDice: (id: number) => void,
+    id: number
+}
+
+export default function Die({ value, isHeld, holdDice, id }: DieProps): JSX.Element {
 
     const styles = {
-        backgroundColor: props.isHeld ? "#59E391" : "#fff"
+        backgroundColor: isHeld ? "#59E391" : "#fff"
     }
 
     return (
-
-        <button className="dice-btn" onClick={() => props.holdDice(props.id)} style={styles}> {props.value}  </button>
-
+        <button className="dice-btn" onClick={() => holdDice(id)} style={styles}> {value}  </button>
     )
 }
