@@ -1,4 +1,4 @@
-import Die from "./Components/Die"
+import Die from "./components/Die"
 import React from "react"
 import { nanoid } from "nanoid"
 import Confetti from 'react-confetti'
