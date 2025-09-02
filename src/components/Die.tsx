@@ -3,8 +3,8 @@ import type { JSX } from "react"
 type DieProps = {
     value: number,
     isHeld: boolean,
-    holdDice: (id: number) => void,
-    id: number
+    holdDice: (id: string) => void,
+    id: string
 }
 
 export default function Die({ value, isHeld, holdDice, id }: DieProps): JSX.Element {

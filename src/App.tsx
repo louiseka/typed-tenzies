@@ -6,10 +6,9 @@ import Confetti from 'react-confetti'
 export default function App() {
 
   const [dice, setDice] = useState(allNewDice())
-
   const [tenzies, setTenzies] = useState(false)
 
-  useEffect(function () {
+  useEffect(() => {
     const allHeld = dice.every(die => die.isHeld)
     const firstValue = dice[0].value
     const allSameValue = dice.every(die => die.value === firstValue)
@@ -58,7 +57,7 @@ export default function App() {
 
   }
 
-  function holdDice(id: number) {
+  function holdDice(id: string) {
     const result = dice.map(die => {
       if (die.id === id) {
         return {
