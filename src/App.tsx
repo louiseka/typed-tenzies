@@ -3,21 +3,18 @@ import { useState, useEffect } from "react"
 import { nanoid } from "nanoid"
 import Confetti from 'react-confetti'
 
+import type { JSX } from "react"
+
+type DieType = {
+  value: number,
+  isHeld: boolean,
+  id: string
+}
+
 export default function App() {
 
-  const [dice, setDice] = useState(allNewDice())
-  const [tenzies, setTenzies] = useState(false)
-
-  useEffect(() => {
-    const allHeld = dice.every(die => die.isHeld)
-    const firstValue = dice[0].value
-    const allSameValue = dice.every(die => die.value === firstValue)
-    if (allHeld && allSameValue) {
-      setTenzies(true)
-    }
-  }, [dice])
-
-  function generateNewDie() {
+  //Generate a single die
+  function generateNewDie(): DieType {
     return {
       value: Math.floor(Math.random() * 6) + 1,
       isHeld: false,
@@ -26,7 +23,7 @@ export default function App() {
   }
 
   //Creating 10 random numbers between 1-6 and pushing to diceArray
-  function allNewDice() {
+  function allNewDice(): DieType[] {
     const diceArray = []
     for (let i = 0; i < 10; i++) {
       diceArray.push(generateNewDie())
@@ -34,16 +31,17 @@ export default function App() {
     return diceArray
   }
 
-  const diceElements = dice.map(die => {
-    return (
-      <Die
-        key={die.id}
-        value={die.value}
-        isHeld={die.isHeld}
-        holdDice={holdDice}
-        id={die.id} />
-    )
-  })
+  const [dice, setDice] = useState<DieType[]>(allNewDice)
+  const [tenzies, setTenzies] = useState<boolean>(false)
+
+  useEffect(() => {
+    const allHeld: boolean = dice.every(die => die.isHeld)
+    const firstValue: number = dice[0].value
+    const allSameValue: boolean = dice.every(die => die.value === firstValue)
+    if (allHeld && allSameValue) {
+      setTenzies(true)
+    }
+  }, [dice])
 
   function rollDice() {
     if (!tenzies) {
@@ -70,6 +68,17 @@ export default function App() {
     })
     setDice(result)
   }
+
+  const diceElements: JSX.Element[] = dice.map(die => {
+    return (
+      <Die
+        key={die.id}
+        value={die.value}
+        isHeld={die.isHeld}
+        holdDice={holdDice}
+        id={die.id} />
+    )
+  })
 
   return (
     <main>
